@@ -48,4 +48,14 @@ exports.autor_create = function (req,res){
     });
 }
 
+exports.autor_delete = function(req,res){
+    Autor.deleteMany({},
+        function(err){
+            if(err) return next(err);
+
+            res.send("Deletados");
+        }
+        )
+}
+
 
