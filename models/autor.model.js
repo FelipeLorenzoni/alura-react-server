@@ -7,6 +7,5 @@ let AutorSchema = new Schema({
     password: {type: String, required: true, max: 100}
 });
 
-
 // Export the model
 module.exports = mongoose.model('Autor', AutorSchema);

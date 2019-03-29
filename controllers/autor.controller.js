@@ -6,14 +6,21 @@ exports.test = function (req, res) {
 };
 
 exports.autor_all = function (req, res) {
-        
-    Autor.findOne({},function(err,autor){
-        if (err) return next(err);
-        res.send(autor);    
-    })
-    
+   
+    Autor.find({},function(err,autores){
+        let lista = [];
+        autores.forEach(autor => {
+            let obj = {
+                id: autor._id,
+                name: autor.name,
+                email: autor.email
+            }
+            lista.push(obj)
+        });
+        if (err) {return next(err);}
+        res.send(lista);    
+    })  
 };
-
 
 exports.autor_create = function (req,res){
     let autor = new Autor({
@@ -23,10 +30,22 @@ exports.autor_create = function (req,res){
     })
 
     autor.save(function(err){
-        if (err) {
-            return next(err);
-        }
         
-        res.send('Autor Criado')
-    })
+        Autor.find({},function(err,autores){
+            let lista = [];
+            autores.forEach(autor => {
+                let obj = {
+                    id: autor._id,
+                    name: autor.name,
+                    email: autor.email
+                }
+                lista.push(obj)
+            });
+            if (err) return next(err);
+
+            res.send(lista);        
+        }) 
+    });
 }
+
+
